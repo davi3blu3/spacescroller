@@ -10,22 +10,8 @@ SpaceScroller.Game.prototype = {
         // create starry background
         this.game.starfield = this.game.add.tileSprite(0,0,800,600, 'starfield');
 
-        // create planets
-        // jupiter = this.game.add.sprite(600, this.randYCoord(), 'jupiter');
-        // saturn = this.game.add.sprite(600, this.randYCoord(), 'saturn');
-        // venus = this.game.add.sprite(600, this.randYCoord(), 'venus');
-        // moon = this.game.add.sprite(500, this.randYCoord(), 'moon');
-
         // create planet group
         this.planets = this.game.add.group();
-        console.log('group size: ', this.planets.length);
-        // planets.add(jupiter);
-        // planets.add(saturn);
-        // planets.add(venus);
-        // planets.add(moon);
-
-        // give planets physics
-        this.game.physics.arcade.enable(this.planets);
 
         // create player and add properties
         player = this.game.add.sprite(50, 280, 'ship');
@@ -37,10 +23,18 @@ SpaceScroller.Game.prototype = {
 
         console.log('Game preload called');
     },
+    availablePlanets: ['saturn', 'jupiter', 'venus', 'moon'],
     createPlanet: function() {
-        console.log('createPlanet called');
-        jupiter = this.game.add.sprite(600, this.randYCoord(), 'jupiter');
-        this.planets.add(jupiter);
+
+        //random x coord beyond right border
+        var randX = Math.ceil(Math.random() * 400) + 800;
+
+        // create random planet
+        var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[Math.ceil(Math.random()*4)]);
+        this.game.physics.arcade.enable(planet);
+
+        // assign random velocity
+        planet.body.velocity.x = Math.ceil(Math.random() * -150) -100;
     },
     update: function() {
         // scroll background
@@ -78,13 +72,23 @@ SpaceScroller.Game.prototype = {
         //     //saturn.body.x = 900;
         //     //saturn.body.y = this.randYCoord();
         // }
+        this.planets.forEach(this.checkPlanet, this, true);
 
-        if (this.planets.length < 4) {
+        if (this.planets.length < 5) {
             this.createPlanet();
         }
     },
-    randYCoord: function() {
-        return (Math.random() * 600) - 40;
+    checkPlanet: function(planet) {
+        try {
+            if (planet.x < -200) {
+                this.planets.remove(planet, true);
+                this.createPlanet();
+            }
+        }
+        catch (e)
+        {
+            console.log(sprite);
+        }        
     }
 
 };
