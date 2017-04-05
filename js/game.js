@@ -1,6 +1,7 @@
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv');
 
-var starfield;
+var starfield,
+    player;
 
 var mainState = {
     preload: function() {
@@ -13,6 +14,9 @@ var mainState = {
         game.load.image('venus', 'assets/planets/venus.png');
         game.load.image('moon', 'assets/planets/moon.png');
 
+        // load player avatar
+        game.load.image('ship', 'assets/spaceship.png');
+
     },
 
     create: function() {
@@ -24,6 +28,8 @@ var mainState = {
         game.add.sprite(600, 200, 'saturn');
         game.add.sprite(600, 500, 'venus');
         game.add.sprite(500, 400, 'moon');
+
+        player = game.add.sprite(50, 280, 'ship');
     },
 
     update: function() {
