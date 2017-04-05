@@ -2,7 +2,7 @@ var SpaceScroller = SpaceScroller || {};
 SpaceScroller.Game = function() {};
 
 SpaceScroller.Game.prototype = {
-
+    planets: '',
     preload: function() {
         this.game.time.advancedTiming = true;
     },
@@ -11,20 +11,21 @@ SpaceScroller.Game.prototype = {
         this.game.starfield = this.game.add.tileSprite(0,0,800,600, 'starfield');
 
         // create planets
-        jupiter = this.game.add.sprite(600, this.randYCoord(), 'jupiter');
-        saturn = this.game.add.sprite(600, this.randYCoord(), 'saturn');
-        venus = this.game.add.sprite(600, this.randYCoord(), 'venus');
-        moon = this.game.add.sprite(500, this.randYCoord(), 'moon');
+        // jupiter = this.game.add.sprite(600, this.randYCoord(), 'jupiter');
+        // saturn = this.game.add.sprite(600, this.randYCoord(), 'saturn');
+        // venus = this.game.add.sprite(600, this.randYCoord(), 'venus');
+        // moon = this.game.add.sprite(500, this.randYCoord(), 'moon');
 
         // create planet group
-        planets = this.game.add.group();
-        planets.add(jupiter);
-        planets.add(saturn);
-        planets.add(venus);
-        planets.add(moon);
+        this.planets = this.game.add.group();
+        console.log('group size: ', this.planets.length);
+        // planets.add(jupiter);
+        // planets.add(saturn);
+        // planets.add(venus);
+        // planets.add(moon);
 
         // give planets physics
-        this.game.physics.arcade.enable(planets);
+        this.game.physics.arcade.enable(this.planets);
 
         // create player and add properties
         player = this.game.add.sprite(50, 280, 'ship');
@@ -35,6 +36,11 @@ SpaceScroller.Game.prototype = {
         cursors = this.game.input.keyboard.createCursorKeys();
 
         console.log('Game preload called');
+    },
+    createPlanet: function() {
+        console.log('createPlanet called');
+        jupiter = this.game.add.sprite(600, this.randYCoord(), 'jupiter');
+        this.planets.add(jupiter);
     },
     update: function() {
         // scroll background
@@ -62,19 +68,23 @@ SpaceScroller.Game.prototype = {
         }      
 
         //  Planet movement
-        jupiter.body.velocity.x = -120;
-        saturn.body.velocity.x = -150;
-        venus.body.velocity.x = -180;
-        moon.body.velocity.x = -220;
+        // jupiter.body.velocity.x = -120;
+        // saturn.body.velocity.x = -150;
+        // venus.body.velocity.x = -180;
+        // moon.body.velocity.x = -220;
         
-        if(saturn.body.x < -200){
-            console.log('saturn out!');
-            saturn.body.x = 900;
-            saturn.body.y = this.randYCoord();
+        // if(planets.children.body.x < -200){
+        //     console.log('planet out!', this);
+        //     //saturn.body.x = 900;
+        //     //saturn.body.y = this.randYCoord();
+        // }
+
+        if (this.planets.length < 4) {
+            this.createPlanet();
         }
     },
     randYCoord: function() {
-        return Math.random() * 600;
+        return (Math.random() * 600) - 40;
     }
 
 };
