@@ -30,11 +30,11 @@ SpaceScroller.Game.prototype = {
         var randX = Math.ceil(Math.random() * 400) + 800;
 
         // create random planet
-        var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[Math.ceil(Math.random()*4)]);
+        var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[Math.floor(Math.random()*4)]);
         this.game.physics.arcade.enable(planet);
 
         // assign random velocity
-        planet.body.velocity.x = Math.ceil(Math.random() * -150) -100;
+        planet.body.velocity.x = Math.ceil(Math.random() * -130) -120;
     },
     update: function() {
         // scroll background
@@ -74,7 +74,7 @@ SpaceScroller.Game.prototype = {
         // }
         this.planets.forEach(this.checkPlanet, this, true);
 
-        if (this.planets.length < 5) {
+        if (this.planets.length < 8) {
             this.createPlanet();
         }
     },
