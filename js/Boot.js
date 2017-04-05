@@ -6,6 +6,7 @@ SpaceScroller.Boot.prototype = {
     preload: function() {
         // assets needed in loading screen
         this.load.image('preloadbar', 'assets/preloader-bar.png');
+        console.log('Boot preload called');
     },
     create: function() {
         this.game.stage.backgroundColor = '#5555ff';
@@ -20,6 +21,6 @@ SpaceScroller.Boot.prototype = {
         // physics system
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        // this.state.start('Preload');
+        this.state.start('Preload');
     }
 };
