@@ -13,6 +13,8 @@ SpaceScroller.Game.prototype = {
         // create planets
         // this.game.add.sprite(600, 0, 'jupiter');
         saturn = this.game.add.sprite(600, 200, 'saturn');
+        // saturn.checkWorldBounds = true;
+        // saturn.outOfBoundsKill = true;
         
         // this.game.add.sprite(600, 500, 'venus');
         // this.game.add.sprite(500, 400, 'moon');
@@ -56,8 +58,23 @@ SpaceScroller.Game.prototype = {
         }      
 
         //  Planet movement
-        saturn.body.velocity.x = -80;
+        saturn.body.velocity.x = -150;
+        
+        if(!saturn.inWorld){
+            console.log('Saturn out!');
+            saturn.body.x = 700;
+            saturn.body.velocity.x = 0;
+            
+            // setTimeout(function(){
+                
+            //     saturn.body.velocity.x = -150;
+            // }, 2000);
+        }
 
+        // saturn.events.onOutOfBounds.add(function(){
+        //     console.log('Saturn out!');
+        //     //saturn.kill();
+        // }, this);
     }
 
 };
