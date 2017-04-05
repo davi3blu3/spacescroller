@@ -59,6 +59,7 @@ SpaceScroller.Game.prototype = {
 
         //  Planet movement
         saturn.body.velocity.x = -150;
+        // saturn.body.velocity.y = 20;
         
         if(!saturn.inWorld){
             console.log('Saturn out!');
