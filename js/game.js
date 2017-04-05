@@ -52,16 +52,16 @@ var mainState = {
 
         if (cursors.up.isDown){
             //  Move up
-            player.body.velocity.y = -150;
+            player.body.velocity.y = -200;
         } else if (cursors.down.isDown){
             //  Move down
-            player.body.velocity.y = 150;
+            player.body.velocity.y = 200;
         } else if (cursors.left.isDown){
             //  Move down
-            player.body.velocity.x = -150;
+            player.body.velocity.x = -200;
         } else if (cursors.right.isDown){
             //  Move down
-            player.body.velocity.x = 150;
+            player.body.velocity.x = 200;
         } else {
             //  Stand still
             player.body.velocity.x = 0;
