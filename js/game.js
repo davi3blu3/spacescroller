@@ -11,16 +11,20 @@ SpaceScroller.Game.prototype = {
         this.game.starfield = this.game.add.tileSprite(0,0,800,600, 'starfield');
 
         // create planets
-        // this.game.add.sprite(600, 0, 'jupiter');
+        jupiter = this.game.add.sprite(600, 0, 'jupiter');
         saturn = this.game.add.sprite(600, 200, 'saturn');
-        // saturn.checkWorldBounds = true;
-        // saturn.outOfBoundsKill = true;
-        
-        // this.game.add.sprite(600, 500, 'venus');
-        // this.game.add.sprite(500, 400, 'moon');
+        venus = this.game.add.sprite(600, 500, 'venus');
+        moon = this.game.add.sprite(500, 400, 'moon');
+
+        // create planet group
+        planets = this.game.add.group();
+        planets.add(jupiter);
+        planets.add(saturn);
+        planets.add(venus);
+        planets.add(moon);
 
         // give planets physics
-        this.game.physics.arcade.enable(saturn);
+        this.game.physics.arcade.enable(planets);
 
         // create player and add properties
         player = this.game.add.sprite(50, 280, 'ship');
@@ -46,10 +50,10 @@ SpaceScroller.Game.prototype = {
             //  Move down
             player.body.velocity.y = 200;
         } else if (cursors.left.isDown){
-            //  Move down
+            //  Move left
             player.body.velocity.x = -200;
         } else if (cursors.right.isDown){
-            //  Move down
+            //  Move right
             player.body.velocity.x = 200;
         } else {
             //  Stand still
@@ -58,24 +62,15 @@ SpaceScroller.Game.prototype = {
         }      
 
         //  Planet movement
+        jupiter.body.velocity.x = -120;
         saturn.body.velocity.x = -150;
-        // saturn.body.velocity.y = 20;
+        venus.body.velocity.x = -180;
+        moon.body.velocity.x = -220;
         
-        if(!saturn.inWorld){
+        if(saturn.body.x < -200){
             console.log('Saturn out!');
-            saturn.body.x = 700;
-            saturn.body.velocity.x = 0;
-            
-            // setTimeout(function(){
-                
-            //     saturn.body.velocity.x = -150;
-            // }, 2000);
+            saturn.body.x = 900;
         }
-
-        // saturn.events.onOutOfBounds.add(function(){
-        //     console.log('Saturn out!');
-        //     //saturn.kill();
-        // }, this);
     }
 
 };
