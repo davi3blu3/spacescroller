@@ -11,10 +11,10 @@ SpaceScroller.Game.prototype = {
         this.game.starfield = this.game.add.tileSprite(0,0,800,600, 'starfield');
 
         // create planets
-        jupiter = this.game.add.sprite(600, 0, 'jupiter');
-        saturn = this.game.add.sprite(600, 200, 'saturn');
-        venus = this.game.add.sprite(600, 500, 'venus');
-        moon = this.game.add.sprite(500, 400, 'moon');
+        jupiter = this.game.add.sprite(600, this.randYCoord(), 'jupiter');
+        saturn = this.game.add.sprite(600, this.randYCoord(), 'saturn');
+        venus = this.game.add.sprite(600, this.randYCoord(), 'venus');
+        moon = this.game.add.sprite(500, this.randYCoord(), 'moon');
 
         // create planet group
         planets = this.game.add.group();
@@ -68,9 +68,13 @@ SpaceScroller.Game.prototype = {
         moon.body.velocity.x = -220;
         
         if(saturn.body.x < -200){
-            console.log('Saturn out!');
+            console.log('saturn out!');
             saturn.body.x = 900;
+            saturn.body.y = this.randYCoord();
         }
+    },
+    randYCoord: function() {
+        return Math.random() * 600;
     }
 
 };
