@@ -1,36 +1,81 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv');
+var SpaceScroller = SpaceScroller || {};
+SpaceScroller.Game = function() {};
 
-var starfield;
+SpaceScroller.Game.prototype = {
 
-var mainState = {
     preload: function() {
-        // load starry background
-        game.load.image('starfield', './assets/starfield.jpg');
-
-        // load obstacles
-        game.load.image('jupiter', 'assets/planets/jupiter.png');
-        game.load.image('saturn', 'assets/planets/saturn.png');
-        game.load.image('venus', 'assets/planets/venus.png');
-        game.load.image('moon', 'assets/planets/moon.png');
-
+        this.game.time.advancedTiming = true;
     },
-
     create: function() {
         // create starry background
-        starfield = game.add.tileSprite(0,0,800,600, 'starfield');
+        this.game.starfield = this.game.add.tileSprite(0,0,800,600, 'starfield');
 
         // create planets
-        game.add.sprite(600, 0, 'jupiter');
-        game.add.sprite(600, 200, 'saturn');
-        game.add.sprite(600, 500, 'venus');
-        game.add.sprite(500, 400, 'moon');
-    },
+        // this.game.add.sprite(600, 0, 'jupiter');
+        saturn = this.game.add.sprite(600, 200, 'saturn');
+        // saturn.checkWorldBounds = true;
+        // saturn.outOfBoundsKill = true;
+        
+        // this.game.add.sprite(600, 500, 'venus');
+        // this.game.add.sprite(500, 400, 'moon');
 
+        // give planets physics
+        this.game.physics.arcade.enable(saturn);
+
+        // create player and add properties
+        player = this.game.add.sprite(50, 280, 'ship');
+        this.game.physics.arcade.enable(player);
+        player.body.collideWorldBounds = true;
+
+        // enable controls
+        cursors = this.game.input.keyboard.createCursorKeys();
+
+        console.log('Game preload called');
+    },
     update: function() {
         // scroll background
-        starfield.tilePosition.x += -2; 
-    }
-}
+        this.game.starfield.tilePosition.x += -2;   
 
-game.state.add('mainState', mainState);
-game.state.start('mainState');
+        //  Spaceshipt movement - reset velocity
+        player.body.velocity.x = 0;
+
+        if (cursors.up.isDown){
+            //  Move up
+            player.body.velocity.y = -200;
+        } else if (cursors.down.isDown){
+            //  Move down
+            player.body.velocity.y = 200;
+        } else if (cursors.left.isDown){
+            //  Move down
+            player.body.velocity.x = -200;
+        } else if (cursors.right.isDown){
+            //  Move down
+            player.body.velocity.x = 200;
+        } else {
+            //  Stand still
+            player.body.velocity.x = 0;
+            player.body.velocity.y = 0;
+        }      
+
+        //  Planet movement
+        saturn.body.velocity.x = -150;
+        // saturn.body.velocity.y = 20;
+        
+        if(!saturn.inWorld){
+            console.log('Saturn out!');
+            saturn.body.x = 700;
+            saturn.body.velocity.x = 0;
+            
+            // setTimeout(function(){
+                
+            //     saturn.body.velocity.x = -150;
+            // }, 2000);
+        }
+
+        // saturn.events.onOutOfBounds.add(function(){
+        //     console.log('Saturn out!');
+        //     //saturn.kill();
+        // }, this);
+    }
+
+};
