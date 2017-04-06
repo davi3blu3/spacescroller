@@ -14,7 +14,12 @@ SpaceScroller.Preload.prototype = {
         this.game.load.image('jupiter', 'assets/planets/jupiter.png');
         this.game.load.image('saturn', 'assets/planets/saturn.png');
         this.game.load.image('venus', 'assets/planets/venus.png');
+        this.game.load.image('crevice', 'assets/planets/crevice.png');
+        this.game.load.image('earth', 'assets/planets/earth.png');
+        this.game.load.image('mars', 'assets/planets/mars.png');
+        this.game.load.image('purply', 'assets/planets/purply.png');
         this.game.load.image('moon', 'assets/planets/moon.png');
+        this.game.load.image('moon2', 'assets/planets/moon2.png');
         this.game.load.image('ship', 'assets/spaceship.png');
 
         console.log('Preload preload called');

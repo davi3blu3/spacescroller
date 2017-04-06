@@ -23,14 +23,17 @@ SpaceScroller.Game.prototype = {
 
         console.log('Game preload called');
     },
-    availablePlanets: ['saturn', 'jupiter', 'venus', 'moon'],
+    availablePlanets: ['saturn', 'jupiter', 'venus', 'crevice', 'earth', 'mars', 'purply', 'moon', 'moon2'],
     createPlanet: function() {
 
         //random x coord beyond right border
         var randX = Math.ceil(Math.random() * 400) + 800;
+        //random planet index 0 - 9
+        var planetIndex = Math.floor(Math.random()*9);
+        console.log(planetIndex);
 
         // create random planet
-        var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[Math.floor(Math.random()*4)]);
+        var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[planetIndex]);
         this.game.physics.arcade.enable(planet);
 
         // assign random velocity
@@ -61,28 +64,20 @@ SpaceScroller.Game.prototype = {
             player.body.velocity.y = 0;
         }      
 
-        //  Planet movement
-        // jupiter.body.velocity.x = -120;
-        // saturn.body.velocity.x = -150;
-        // venus.body.velocity.x = -180;
-        // moon.body.velocity.x = -220;
         
-        // if(planets.children.body.x < -200){
-        //     console.log('planet out!', this);
-        //     //saturn.body.x = 900;
-        //     //saturn.body.y = this.randYCoord();
-        // }
         this.planets.forEach(this.checkPlanet, this, true);
 
-        if (this.planets.length < 8) {
+        //
+        if (this.planets.length < 7) {
             this.createPlanet();
         }
     },
     checkPlanet: function(planet) {
         try {
+            // check if planet is out of left bounds - regen
             if (planet.x < -200) {
                 this.planets.remove(planet, true);
-                this.createPlanet();
+                // this.createPlanet();
             }
         }
         catch (e)
