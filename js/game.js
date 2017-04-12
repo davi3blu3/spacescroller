@@ -30,7 +30,6 @@ SpaceScroller.Game.prototype = {
         var randX = Math.ceil(Math.random() * 400) + 800;
         //random planet index 0 - 9
         var planetIndex = Math.floor(Math.random()*9);
-        console.log(planetIndex);
 
         // create random planet
         var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[planetIndex]);
@@ -64,13 +63,22 @@ SpaceScroller.Game.prototype = {
             player.body.velocity.y = 0;
         }      
 
-        
+        // check if planet has moved out of game view
         this.planets.forEach(this.checkPlanet, this, true);
 
-        //
+        // generate planets
         if (this.planets.length < 7) {
             this.createPlanet();
         }
+
+        // handle planet / ship collision
+        this.game.physics.arcade.overlap(player, this.planets, collisionHandler, null, this);
+        
+        function collisionHandler (player, planet) {
+            console.log('collision! You\'re dead');
+            player.kill();
+        }
+
     },
     checkPlanet: function(planet) {
         try {
