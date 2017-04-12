@@ -24,6 +24,7 @@ SpaceScroller.Game.prototype = {
         console.log('Game preload called');
     },
     availablePlanets: ['saturn', 'jupiter', 'venus', 'crevice', 'earth', 'mars', 'purply', 'moon', 'moon2'],
+    planetRadii: [50, 70, 45, 42, 40, 37, 36, 25, 30],
     createPlanet: function() {
 
         //random x coord beyond right border
@@ -35,8 +36,14 @@ SpaceScroller.Game.prototype = {
         var planet = this.planets.create(randX, this.game.world.randomY - 20, this.availablePlanets[planetIndex]);
         this.game.physics.arcade.enable(planet);
 
+        // set collidable area to circle
+        planet.body.setCircle(this.planetRadii[planetIndex]);
+
         // assign random velocity
-        planet.body.velocity.x = Math.ceil(Math.random() * -130) -120;
+        // planet.body.velocity.x = Math.ceil(Math.random() * -130) -120;
+
+        // debugging slow velocity
+        planet.body.velocity.x = -40;
     },
     update: function() {
         // scroll background
